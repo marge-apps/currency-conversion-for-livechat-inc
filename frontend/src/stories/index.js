@@ -17,23 +17,15 @@ storiesOf('LargeInput', module)
 	/>)
 
 
-const currencies = [
-	{
-		name: 'EUR',
-		rate: 1.3
-	},
-	{
-		name: 'USD',
-		rate: 1.0
-	},
-	{
-		name: 'GBP',
-		rate: 1.6
-	},
+const availableCurrencies = [
+	'EUR', 'USD', 'GBP'
 ]
+
 storiesOf('CurrencyCard', module)
 	.add('default', () => <CurrencyCard
 							amount={15}
-							currencies={currencies}
+							rate={1}
+							currency="USD"
+							availableCurrencies={availableCurrencies}
 							onChangeAmount={action('onChangeAmount')}
 							/>)

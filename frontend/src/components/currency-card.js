@@ -55,25 +55,13 @@ export const CurrencyCard = compose(
 			expanded: false,
 			currency: 'USD',
 			rate: 1,
-			currencies: props.currencies
 		}),
 		{
 			toggleCard: ({expanded}) => () => ({expanded: !expanded}),
 			setRate: ({rate}) => ifElse(is(Number), value => ({rate: value}), () => ({rate})),
-			setCurrency: ({currencies, currency}) => value => {
-				// ({currency: value, rate: props.currencies.find(c => c.name === value).rate}),
-				const findRate = value => pipe(
-					find(propEq('name', value)),
-					prop('rate'),
-				)(currencies)
-
-				console.log(findRate(value))
-
-				return {
-					currency: value,
-					rate: findRate(value)
-				}
-			}
+			setCurrency: () => value => ({
+				currency: value
+			})
 		}
 	),
 	withProps(props => ({
@@ -106,10 +94,11 @@ export const CurrencyCard = compose(
 				fullWidth
 			>
 				{map(option => (
-					<MenuItem key={option.name} value={option.name}>
-						{option.name}
+					<MenuItem key={option} value={option}>
+						{option}
 					</MenuItem>
-				), props.currencies)}
+				), props.availableCurrencies)}
+				{console.log(props)}
 			</TextField>
 			<TextField
 				label="Rate"
