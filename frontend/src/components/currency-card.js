@@ -31,6 +31,9 @@ const styles = theme => ({
 		top: '10px',
 		right: '10px',
 		zIndex: 99,
+	},
+	currencyCard: {
+		position: 'relative'
 	}
 })
 
@@ -52,24 +55,20 @@ export const LargeInput = withStyles(styles)(
 export const CurrencyCard = compose(
 	withStateHandlers(
 		props => ({
-			expanded: false,
-			currency: 'USD',
-			rate: 1,
+			expanded: props.expanded || false,
 		}),
 		{
 			toggleCard: ({expanded}) => () => ({expanded: !expanded}),
-			setRate: ({rate}) => ifElse(is(Number), value => ({rate: value}), () => ({rate})),
-			setCurrency: () => value => ({
-				currency: value
-			})
 		}
 	),
 	withProps(props => ({
-		setRate: e => props.setRate(parseFloat(e.target.value) || 0),
-		setCurrency: e => props.setCurrency(e.target.value),
+		setRate: e => props.onChangeRate(props.id)(parseFloat(e.target.value) || 0),
+		setCurrency: e => props.onChangeCurrency(props.id)(e.target.value),
+		onChangeAmount: e => props.onChangeAmount(props.id)(parseFloat(e.target.value) / props.rate),
+		onDelete: _ => props.onDelete(props.id)()
 	})),
 	withStyles(styles)
-)(props => <Card {...props} style={{ position: 'relative' }}>
+)(props => <Card {...props} className={props.classes.currencyCard}>
 	<IconButton
 		className={props.classes.expandButton}
 		onClick={props.toggleCard}
@@ -118,7 +117,9 @@ export const CurrencyCard = compose(
 
 	<CardActions>
 		<Collapse in={props.expanded}>
-			<Button color="secondary"><Delete /> Delete</Button>
+			<Button
+				onClick={props.onDelete}
+				color="secondary"><Delete /> Delete</Button>
 		</Collapse>
 	</CardActions>
 </Card>

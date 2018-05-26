@@ -15,7 +15,11 @@ storiesOf('LargeInput', module)
 		label="USD"
 		placeholder="0.00"
 	/>)
-
+	.add('with value', () => <LargeInput
+		label="USD"
+		value={43.24}
+		placeholder="0.00"
+	/>)
 
 const availableCurrencies = [
 	'EUR', 'USD', 'GBP'
@@ -23,9 +27,25 @@ const availableCurrencies = [
 
 storiesOf('CurrencyCard', module)
 	.add('default', () => <CurrencyCard
+							id="1"
 							amount={15}
 							rate={1}
 							currency="USD"
 							availableCurrencies={availableCurrencies}
-							onChangeAmount={action('onChangeAmount')}
+							onChangeRate={() => action('onChangeRate')}
+							onChangeCurrency={() => action('onChangeCurrency')}
+							onChangeAmount={() => action('onChangeAmount')}
+							onDelete={() => action('onDelete')}
+							/>)
+	.add('expanded', () => <CurrencyCard
+							expanded
+							id="2"
+							amount={15}
+							rate={1.3}
+							currency="EUR"
+							availableCurrencies={availableCurrencies}
+							onChangeRate={() => action('onChangeRate')}
+							onChangeCurrency={() => action('onChangeCurrency')}
+							onChangeAmount={() => action('onChangeAmount')}
+							onDelete={() => action('onDelete')}
 							/>)
