@@ -1,6 +1,6 @@
 import React from 'react'
 import debounce from 'debounce';
-import {is, ifElse, pipe, map, find, propEq, prop, T} from 'ramda';
+import {is, ifElse, pipe, map, omit, find, pick, propEq, prop, T} from 'ramda';
 import {compose, withState, withStateHandlers, withProps, defaultProps, setPropTypes} from 'recompose';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
@@ -20,38 +20,26 @@ import Delete from '@material-ui/icons/Delete';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import {Icon} from '@material-ui/core';
 
-const styles = theme => ({
-	largeField: {
+const largeInputStyles = theme => ({
+	input: {
 		fontSize: '2.5rem',
+	},
+	underline: {
 		'&:before': {
 			borderBottomColor: 'white'
-		},
-	},
-	expandButton: {
-		position: 'absolute',
-		top: '10px',
-		right: '10px',
-		zIndex: 99,
-	},
-	currencyCard: {
-		position: 'relative'
+		}
 	}
 })
 
-export const LargeInput = withStyles(styles)(
+export const LargeInput = withStyles(largeInputStyles)(
 	props => <TextField
-		InputProps={{
-			classes: {
-				input: props.classes.largeField,
-				underline: props.classes.largeField
-			}
-		}}
+		InputProps={{ classes: props.classes}}
 		InputLabelProps={{
 			shrink: true
 		}}
-		{...props}
-	/>
-)
+		{...omit(['classes'], props)}
+		/>
+	)
 
 const currencyCardPropTypes = setPropTypes({
 	id: PropTypes.string.isRequired,
@@ -91,13 +79,25 @@ const manipulateActions = withProps(props => ({
 	onChangeAmount: e => props.onChangeAmount(parseFloat(e.target.value) / props.rate),
 }))
 
+const currencyCardStyle = theme => ({
+	expandButton: {
+		position: 'absolute',
+		top: '10px',
+		right: '10px',
+		zIndex: 9,
+	},
+	currencyCard: {
+		position: 'relative'
+	}
+})
+
 export const CurrencyCard = compose(
 	currencyCardPropTypes,
 	currencyCardDefaults,
 	currencyCardStateHandlers,
 	manipulateActions,
-	withStyles(styles)
-)(props => <Card {...props} className={props.classes.currencyCard}>
+	withStyles(currencyCardStyle)
+)(props => <Card className={props.classes.currencyCard}>
 	<IconButton
 		className={props.classes.expandButton}
 		onClick={props.toggleCard}
@@ -126,7 +126,6 @@ export const CurrencyCard = compose(
 						{option}
 					</MenuItem>
 				), props.availableCurrencies)}
-				{console.log(props)}
 			</TextField>
 			<TextField
 				label="Rate"
