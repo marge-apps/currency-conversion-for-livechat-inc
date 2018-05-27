@@ -32,10 +32,10 @@ storiesOf('CurrencyCard', module)
 							rate={1}
 							currency="USD"
 							availableCurrencies={availableCurrencies}
-							onChangeRate={() => action('onChangeRate')}
-							onChangeCurrency={() => action('onChangeCurrency')}
-							onChangeAmount={() => action('onChangeAmount')}
-							onDelete={() => action('onDelete')}
+							onChangeRate={action('onChangeRate')}
+							onChangeCurrency={action('onChangeCurrency')}
+							onChangeAmount={action('onChangeAmount')}
+							onDelete={action('onDelete')}
 							/>)
 	.add('expanded', () => <CurrencyCard
 							expanded
@@ -44,8 +44,8 @@ storiesOf('CurrencyCard', module)
 							rate={1.3}
 							currency="EUR"
 							availableCurrencies={availableCurrencies}
-							onChangeRate={() => action('onChangeRate')}
-							onChangeCurrency={() => action('onChangeCurrency')}
-							onChangeAmount={() => action('onChangeAmount')}
-							onDelete={() => action('onDelete')}
+							onChangeRate={action('onChangeRate')}
+							onChangeCurrency={action('onChangeCurrency')}
+							onChangeAmount={action('onChangeAmount')}
+							onDelete={action('onDelete')}
 							/>)
