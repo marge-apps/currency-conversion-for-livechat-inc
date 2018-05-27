@@ -25,7 +25,7 @@ const availableCurrencies = [
 	'EUR', 'USD', 'GBP'
 ]
 
-storiesOf('CurrencyCard', module)
+storiesOf('CurrencyCard1', module)
 	.add('default', () => <CurrencyCard
 							id="1"
 							amount={15}

@@ -59,6 +59,7 @@ const currencyCardDefaults = defaultProps({
 	onChangeAmount: T,
 	onDelete: T,
 	amount: 0,
+	currency: 'USD',
 	rate: 1,
 	expanded: false,
 	availableCurrencies: []
