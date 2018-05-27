@@ -98,7 +98,10 @@ export const CurrencyCard = compose(
 	currencyCardStateHandlers,
 	manipulateActions,
 	withStyles(currencyCardStyle)
-)(props => <Card className={props.classes.currencyCard}>
+)(props => <Card
+	className={props.classes.currencyCard}
+	square={props.square}
+	>
 	<IconButton
 		className={props.classes.expandButton}
 		onClick={props.toggleCard}

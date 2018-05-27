@@ -7,6 +7,7 @@ import { linkTo } from '@storybook/addon-links';
 import { Button, Welcome } from '@storybook/react/demo';
 
 import { CurrencyCard, LargeInput } from '../components/currency-card'
+import { ConversionScreen } from '../components/conversion-screen'
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -25,7 +26,7 @@ const availableCurrencies = [
 	'EUR', 'USD', 'GBP'
 ]
 
-storiesOf('CurrencyCard1', module)
+storiesOf('CurrencyCard', module)
 	.add('default', () => <CurrencyCard
 							id="1"
 							amount={15}
@@ -48,4 +49,22 @@ storiesOf('CurrencyCard1', module)
 							onChangeCurrency={action('onChangeCurrency')}
 							onChangeAmount={action('onChangeAmount')}
 							onDelete={action('onDelete')}
+							/>)
+
+const actions = {
+	onChangeRate: action('onChangeRate'),
+	onChangeCurrency: action('onChangeCurrency'),
+	onChangeAmount: action('onChangeAmount'),
+	onDelete: action('onDelete'),
+}
+
+const converters = [
+	{id: '1', amount: 10, currency: 'USD', rate: 1, availableCurrencies, ...actions},
+	{id: '2', amount: 10, currency: 'GBP', rate: 0.6, availableCurrencies, ...actions},
+	{id: '3', amount: 10, currency: 'EUR', rate: 0.8, availableCurrencies, ...actions},
+]
+storiesOf('ConversionScreen', module)
+	.add('default', () => <ConversionScreen
+							converters={converters}
+							onCreate={action('onCreate')}
 							/>)
