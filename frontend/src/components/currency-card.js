@@ -14,11 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Delete from '@material-ui/icons/Delete';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import {Icon} from '@material-ui/core';
+import {Delete, KeyboardArrowDown, ExpandLess, ExpandMore, Done} from '@material-ui/icons';
+
 
 const largeInputStyles = theme => ({
 	input: {
@@ -47,6 +44,7 @@ const currencyCardPropTypes = setPropTypes({
 	onChangeCurrency: PropTypes.func,
 	onChangeAmount: PropTypes.func,
 	onDelete: PropTypes.func,
+	onPin: PropTypes.func,
 	amount: PropTypes.number,
 	rate: PropTypes.number,
 	expanded: PropTypes.bool,
@@ -58,6 +56,7 @@ const currencyCardDefaults = defaultProps({
 	onChangeCurrency: T,
 	onChangeAmount: T,
 	onDelete: T,
+	onPin: T,
 	amount: 0,
 	currency: 'USD',
 	rate: 1,
@@ -106,7 +105,7 @@ export const CurrencyCard = compose(
 		className={props.classes.expandButton}
 		onClick={props.toggleCard}
 	>
-		{props.expanded ? (<ExpandLessIcon />) : (<ExpandMoreIcon />)}
+		{props.expanded ? (<ExpandLess />) : (<ExpandMore />)}
 	</IconButton>
 
 	<CardContent>
@@ -132,6 +131,7 @@ export const CurrencyCard = compose(
 				), props.availableCurrencies)}
 			</TextField>
 			<TextField
+				disabled
 				label="Rate"
 				value={props.rate}
 				onChange={props.onChangeRate}
@@ -148,9 +148,15 @@ export const CurrencyCard = compose(
 
 	<CardActions>
 		<Collapse in={props.expanded}>
-			<Button
-				onClick={props.onDelete}
-				color="secondary"><Delete /> Delete</Button>
+		<Button
+			onClick={props.onPin}>
+			Pin to top
+		</Button>
+		<Button
+			onClick={props.onDelete}
+			color="secondary">
+			Delete
+		</Button>
 		</Collapse>
 	</CardActions>
 </Card>
