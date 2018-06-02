@@ -2,6 +2,8 @@ import React from 'react'
 import {map} from 'ramda'
 import {branch, renderComponent, withProps, compose} from 'recompose'
 import {withStyles} from '@material-ui/core/styles';
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
 
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress'
@@ -47,6 +49,7 @@ export const ConversionScreen = compose(
 	{
 		map(c => <CurrencyCard {...c}
 			key={c.id}
+			elevation={1}
 			square
 			/>, props.converters)
 	}

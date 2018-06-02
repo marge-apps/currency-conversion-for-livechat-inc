@@ -86,7 +86,8 @@ const currencyCardStyle = theme => ({
 		zIndex: 9,
 	},
 	currencyCard: {
-		position: 'relative'
+		position: 'relative',
+		marginBottom: '1rem'
 	}
 })
 
@@ -99,6 +100,8 @@ export const CurrencyCard = compose(
 )(props => <Card
 	className={props.classes.currencyCard}
 	square={props.square}
+	elevation={props.elevation}
+	margin="normal"
 	>
 	<IconButton
 		className={props.classes.expandButton}
