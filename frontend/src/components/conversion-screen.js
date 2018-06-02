@@ -1,9 +1,10 @@
 import React from 'react'
 import {map} from 'ramda'
-import {withProps, compose} from 'recompose'
+import {branch, renderComponent, withProps, compose} from 'recompose'
 import {withStyles} from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress'
 import AddIcon from '@material-ui/icons/Add'
 import {CurrencyCard} from './currency-card'
 
@@ -26,6 +27,13 @@ const conversionScreenStyle = theme => ({
 		bottom: '1rem',
 		right: '1rem',
 		zIndex: 9
+	},
+	loadingIndicator: {
+		position: 'fixed',
+		top: 0,
+		left: 0,
+		right: 0,
+		zIndex: 100,
 	}
 })
 
@@ -33,6 +41,9 @@ export const ConversionScreen = compose(
 	withStyles(conversionScreenStyle)
 )(props =>
 <div className={props.classes.conversionScreen}>
+	<div className={props.classes.loadingIndicator}>
+		{ props.loading && <LinearProgress/>}
+	</div>
 	{
 		map(c => <CurrencyCard {...c}
 			key={c.id}

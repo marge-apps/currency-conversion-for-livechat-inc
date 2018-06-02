@@ -28,24 +28,22 @@ const availableCurrencies = [
 
 storiesOf('CurrencyCard', module)
 	.add('default', () => <CurrencyCard
-							id="1"
 							amount={15}
 							rate={1}
 							currency="USD"
 							availableCurrencies={availableCurrencies}
-							onChangeRate={action('onChangeRate')}
+							onPin={action('onPin')}
 							onChangeCurrency={action('onChangeCurrency')}
 							onChangeAmount={action('onChangeAmount')}
 							onDelete={action('onDelete')}
 							/>)
 	.add('expanded', () => <CurrencyCard
 							expanded
-							id="2"
 							amount={15}
 							rate={1.3}
 							currency="EUR"
 							availableCurrencies={availableCurrencies}
-							onChangeRate={action('onChangeRate')}
+							onPin={action('onPin')}
 							onChangeCurrency={action('onChangeCurrency')}
 							onChangeAmount={action('onChangeAmount')}
 							onDelete={action('onDelete')}
@@ -65,6 +63,11 @@ const converters = [
 ]
 storiesOf('ConversionScreen', module)
 	.add('default', () => <ConversionScreen
+							converters={converters}
+							onCreate={action('onCreate')}
+							/>)
+	.add('loading', () => <ConversionScreen
+							loading
 							converters={converters}
 							onCreate={action('onCreate')}
 							/>)

@@ -1,7 +1,7 @@
 import React from 'react'
 import debounce from 'debounce';
 import {is, ifElse, pipe, map, omit, find, pick, propEq, prop, T} from 'ramda';
-import {compose, withState, withStateHandlers, withProps, defaultProps, setPropTypes} from 'recompose';
+import {branch, renderComponent, compose, withState, withStateHandlers, withProps, defaultProps, setPropTypes} from 'recompose';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -39,7 +39,6 @@ export const LargeInput = withStyles(largeInputStyles)(
 	)
 
 const currencyCardPropTypes = setPropTypes({
-	id: PropTypes.string.isRequired,
 	onChangeRate: PropTypes.func,
 	onChangeCurrency: PropTypes.func,
 	onChangeAmount: PropTypes.func,
