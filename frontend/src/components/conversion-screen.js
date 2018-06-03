@@ -27,7 +27,8 @@ const conversionScreenStyle = theme => ({
 	fab: {
 		position: 'fixed',
 		bottom: '1rem',
-		right: '1rem',
+		left: '50%',
+		right: '50%',
 		zIndex: 9
 	},
 	loadingIndicator: {
@@ -48,7 +49,7 @@ export const ConversionScreen = compose(
 	</div>
 	{
 		map(c => <CurrencyCard {...c}
-			key={c.id}
+			key={c.position}
 			elevation={1}
 			square
 			/>, props.converters)

@@ -64,7 +64,7 @@ const currencyCardStateHandlers = withStateHandlers(
 const manipulateActions = withProps(props => ({
 	onChangeRate: e => props.onChangeRate(parseFloat(e.target.value) || 0),
 	onChangeCurrency: e => props.onChangeCurrency(e.target.value),
-	onChangeAmount: e => props.onChangeAmount(parseFloat(e.target.value) / props.rate),
+	onChangeAmount: e => props.onChangeAmount(e),
 }))
 
 const currencyCardStyle = theme => ({
@@ -101,6 +101,7 @@ elevation={2}
 		placeholder="0.00"
 		label={props.currency}
 		onChange={props.onChangeAmount}
+		type="number"
 		fullWidth />
 	<Collapse in={props.expanded}>
 		<TextField
@@ -132,7 +133,7 @@ elevation={2}
 </Card>
 
 const handleBaseCard = branch(
-	({currency, base}) => currency === base,
+	({currency, base, position}) => currency === base && position === 0,
 	renderComponent(BaseCard)
 )
 
@@ -160,7 +161,6 @@ export const CurrencyCard = compose(
 			value={(props.amount * props.rate).toFixed(2)}
 			placeholder="0.00"
 			label={`${props.amount} ${props.base} > ${props.currency}`}
-			onChange={props.onChangeAmount}
 			fullWidth />
 		<Collapse in={props.expanded}>
 			<TextField
