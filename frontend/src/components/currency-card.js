@@ -133,7 +133,7 @@ elevation={2}
 </Card>
 
 const handleBaseCard = branch(
-	({currency, base, position}) => currency === base && position === 0,
+	({currency, base, position}) => position === 0,
 	renderComponent(BaseCard)
 )
 
@@ -161,6 +161,7 @@ export const CurrencyCard = compose(
 			value={(props.amount * props.rate).toFixed(2)}
 			placeholder="0.00"
 			label={`${props.amount} ${props.base} > ${props.currency}`}
+			readOnly
 			fullWidth />
 		<Collapse in={props.expanded}>
 			<TextField
