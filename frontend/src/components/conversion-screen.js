@@ -1,14 +1,17 @@
 import React from 'react'
-import {map, equals} from 'ramda'
+import {map, equals, addIndex} from 'ramda'
 import {branch, renderComponent, withProps, compose} from 'recompose'
 import {withStyles} from '@material-ui/core/styles';
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
-
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress'
 import AddIcon from '@material-ui/icons/Add'
 import {CurrencyCard} from './currency-card'
+
+const mapIndexed = addIndex(map);
+
+const availableCurrencies = [
+	'USD', 'GBP', 'EUR', 'ALL'
+]
 
 export const CreateButton = props =>
 <Button
@@ -31,26 +34,24 @@ const conversionScreenStyle = theme => ({
 		right: '50%',
 		zIndex: 9
 	},
-	loadingIndicator: {
-		position: 'fixed',
-		top: 0,
-		left: 0,
-		right: 0,
-		zIndex: 100,
-	}
 })
 
 export const ConversionScreen = compose(
 	withStyles(conversionScreenStyle)
 )(props =>
 <div className={props.classes.conversionScreen}>
-	<div className={props.classes.loadingIndicator}>
-		{ props.loading && <LinearProgress/>}
-	</div>
 	{
-		map(c => <CurrencyCard {...c}
-			key={c.position}
-			elevation={1}
+		mapIndexed((c, i) => <CurrencyCard {...c}
+			isBaseCard={i === 0}
+			pos={i}
+			amount={props.amount}
+			onChangeCurrency={props.onChangeCurrency}
+			onPin={() => props.onPin(i)}
+			onDelete={() => props.onDelete(i)}
+			onChangeAmount={props.onChangeAmount}
+			key={i}
+			base={props.base}
+			availableCurrencies={availableCurrencies}
 			square
 			/>, props.converters)
 	}
