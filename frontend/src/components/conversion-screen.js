@@ -1,5 +1,5 @@
 import React from 'react'
-import {map} from 'ramda'
+import {map, equals} from 'ramda'
 import {branch, renderComponent, withProps, compose} from 'recompose'
 import {withStyles} from '@material-ui/core/styles';
 import { graphql } from "react-apollo";

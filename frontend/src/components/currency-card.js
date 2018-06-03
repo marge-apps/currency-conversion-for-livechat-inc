@@ -38,18 +38,6 @@ export const LargeInput = withStyles(largeInputStyles)(
 		/>
 	)
 
-const currencyCardPropTypes = setPropTypes({
-	onChangeRate: PropTypes.func,
-	onChangeCurrency: PropTypes.func,
-	onChangeAmount: PropTypes.func,
-	onDelete: PropTypes.func,
-	onPin: PropTypes.func,
-	amount: PropTypes.number,
-	rate: PropTypes.number,
-	expanded: PropTypes.bool,
-	availableCurrencies: PropTypes.arrayOf(PropTypes.string)
-})
-
 const currencyCardDefaults = defaultProps({
 	onChangeRate: T,
 	onChangeCurrency: T,
@@ -58,6 +46,7 @@ const currencyCardDefaults = defaultProps({
 	onPin: T,
 	amount: 0,
 	currency: 'USD',
+	base: 'USD',
 	rate: 1,
 	expanded: false,
 	availableCurrencies: []
@@ -87,16 +76,72 @@ const currencyCardStyle = theme => ({
 	},
 	currencyCard: {
 		position: 'relative',
-		marginBottom: '1rem'
+	},
+	currencyCardBase: {
+		position: 'relative',
+		marginBottom: '1rem',
 	}
 })
 
+const BaseCard = props => <Card
+className={props.classes.currencyCardBase}
+square={props.square}
+elevation={2}
+>
+<IconButton
+	className={props.classes.expandButton}
+	onClick={props.toggleCard}
+>
+	{props.expanded ? (<ExpandLess />) : (<ExpandMore />)}
+</IconButton>
+
+<CardContent>
+	<LargeInput
+		value={props.amount}
+		placeholder="0.00"
+		label={props.currency}
+		onChange={props.onChangeAmount}
+		fullWidth />
+	<Collapse in={props.expanded}>
+		<TextField
+			label="Currency"
+			value={props.currency}
+			margin="normal"
+			onChange={props.onChangeCurrency}
+			select
+			fullWidth
+		>
+			{map(option => (
+				<MenuItem key={option} value={option}>
+					{option}
+				</MenuItem>
+			), props.availableCurrencies)}
+		</TextField>
+	</Collapse>
+</CardContent>
+
+<CardActions>
+	<Collapse in={props.expanded}>
+	<Button
+		onClick={props.onDelete}
+		color="secondary">
+		Delete
+	</Button>
+	</Collapse>
+</CardActions>
+</Card>
+
+const handleBaseCard = branch(
+	({currency, base}) => currency === base,
+	renderComponent(BaseCard)
+)
+
 export const CurrencyCard = compose(
-	currencyCardPropTypes,
 	currencyCardDefaults,
 	currencyCardStateHandlers,
+	withStyles(currencyCardStyle),
+	handleBaseCard,
 	manipulateActions,
-	withStyles(currencyCardStyle)
 )(props => <Card
 	className={props.classes.currencyCard}
 	square={props.square}
@@ -114,7 +159,7 @@ export const CurrencyCard = compose(
 		<LargeInput
 			value={(props.amount * props.rate).toFixed(2)}
 			placeholder="0.00"
-			label={props.currency}
+			label={`${props.amount} ${props.base} > ${props.currency}`}
 			onChange={props.onChangeAmount}
 			fullWidth />
 		<Collapse in={props.expanded}>
@@ -135,7 +180,7 @@ export const CurrencyCard = compose(
 			<TextField
 				disabled
 				label="Rate"
-				value={props.rate}
+				value={props.rate.toFixed(4)}
 				onChange={props.onChangeRate}
 				inputProps={{
 					type: 'number',

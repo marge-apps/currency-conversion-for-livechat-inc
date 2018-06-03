@@ -12,7 +12,7 @@ const availableCurrencies = [
 
 const styles = theme => ({
 	container: {
-		padding: '0 1rem 1rem'
+		padding: '1rem'
 	}
 })
 
@@ -28,7 +28,7 @@ const currenciesQuery = gql`
 const state = withStateHandlers(props => ({
 	base: 'USD',
 	amount: 10,
-	currencies: ["AED", "EUR", "AUD"]
+	currencies: ['USD', "AED", "EUR", "AUD"]
 }))
 
 export default compose(
@@ -43,6 +43,7 @@ export default compose(
 	}),
 	withProps(props => ({
 		converters: map(c => ({
+			availableCurrencies,
 			amount: props.amount,
 			currency: c.abbreviation,
 			rate: c.rate,
