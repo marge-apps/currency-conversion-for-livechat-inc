@@ -18,7 +18,8 @@ const state = withStateHandlers(props => ({
 	converters: [{currency: 'USD'}]
 }), {
 	pin: ({converters}) => i => ({
-		// converters: [converters[i], ...remove(i, 1, converters)]
+		converters: [converters[i], ...remove(i, 1, converters)],
+		base: converters[i].currency
 	}),
 	createConverter: ({converters}) => () => ({ converters: [...converters, {currency: 'GBP'}]}),
 	removeConverter: ({converters}) => i => ({converters: remove(i, 1, converters)}),
@@ -35,6 +36,7 @@ export default compose(
 		<div className={props.classes.container}>
 			<ConversionScreen
 				amount={props.amount}
+				base={props.base}
 				converters={props.converters}
 				onCreate={props.createConverter}
 				onDelete={props.removeConverter}
