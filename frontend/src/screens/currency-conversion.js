@@ -5,7 +5,7 @@ import {compose, withStateHandlers, withProps} from 'recompose';
 import {map, addIndex, update, remove} from 'ramda'
 import {withStyles} from '@material-ui/core/styles';
 import {ConversionScreen} from '../components/conversion-screen'
-
+import {retrieveFromState, storeToState} from '../hoc/persisted-state'
 const styles = theme => ({
 	container: {
 		padding: '1rem'
@@ -13,9 +13,9 @@ const styles = theme => ({
 })
 
 const state = withStateHandlers(props => ({
-	amount: 1,
-	base: 'USD',
-	converters: [{currency: 'USD'}]
+	amount: props.amount || 1,
+	base: props.base || 'USD',
+	converters: props.converters || [{currency: 'USD'}]
 }), {
 	pin: ({converters}) => i => ({
 		converters: [converters[i], ...remove(i, 1, converters)],
@@ -28,7 +28,9 @@ const state = withStateHandlers(props => ({
 })
 
 export default compose(
+	retrieveFromState,
 	state,
+	storeToState,
 	withProps(props => console.log(props.converters)),
 	withStyles(styles),
 )(
