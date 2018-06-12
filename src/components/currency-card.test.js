@@ -1,6 +1,6 @@
 import React from 'react'
-import {shallow, render} from 'enzyme'
-import {LargeInput, CurrencyCard} from './currency-card'
+import { shallow, render } from 'enzyme'
+import { LargeInput, CurrencyCard } from './currency-card'
 
 describe('LargeInput', () => {
 	test('renders without issues', () => {
@@ -8,13 +8,13 @@ describe('LargeInput', () => {
 	})
 
 	test('show label', () => {
-		const wrapper = render(<LargeInput label="test"/>)
+		const wrapper = render(<LargeInput label="test" />)
 
 		expect(wrapper.find('label').text()).toEqual('test')
 	})
 
 	test('show value', () => {
-		const wrapper = render(<LargeInput value="test"/>)
+		const wrapper = render(<LargeInput value="test" />)
 
 		expect(wrapper.find('input').attr('value')).toEqual('test')
 	})

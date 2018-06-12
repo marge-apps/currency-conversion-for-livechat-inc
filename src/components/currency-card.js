@@ -1,9 +1,18 @@
 import React from 'react'
-import {graphql} from 'react-apollo';
+import { graphql } from 'react-apollo'
 
-import {map, omit, pathOr, prop, T} from 'ramda';
-import {branch, renderComponent, compose, withState, withStateHandlers, withProps, defaultProps, setPropTypes} from 'recompose';
-import {withStyles} from '@material-ui/core/styles';
+import { map, omit, pathOr, prop, T } from 'ramda'
+import {
+	branch,
+	renderComponent,
+	compose,
+	withState,
+	withStateHandlers,
+	withProps,
+	defaultProps,
+	setPropTypes,
+} from 'recompose'
+import { withStyles } from '@material-ui/core/styles'
 import {
 	Card,
 	CardContent,
@@ -14,9 +23,15 @@ import {
 	Button,
 	IconButton,
 	LinearProgress,
-} from '@material-ui/core';
+} from '@material-ui/core'
 
-import {Delete, KeyboardArrowDown, ExpandLess, ExpandMore, Done} from '@material-ui/icons';
+import {
+	Delete,
+	KeyboardArrowDown,
+	ExpandLess,
+	ExpandMore,
+	Done,
+} from '@material-ui/icons'
 import currenciesQuery from '../queries/currency'
 
 const largeInputStyles = theme => ({
@@ -25,20 +40,23 @@ const largeInputStyles = theme => ({
 	},
 	underline: {
 		'&:before': {
-			borderBottomColor: 'white'
-		}
-	}
+			borderBottomColor: 'white',
+		},
+	},
 })
 
-export const LargeInput = withStyles(largeInputStyles)(
-	props => <TextField
-		InputProps={{ classes: props.classes, disableUnderline: props.disableUnderline}}
+export const LargeInput = withStyles(largeInputStyles)(props => (
+	<TextField
+		InputProps={{
+			classes: props.classes,
+			disableUnderline: props.disableUnderline,
+		}}
 		InputLabelProps={{
-			shrink: true
+			shrink: true,
 		}}
 		{...omit(['classes', 'disableUnderline'], props)}
-		/>
-	)
+	/>
+))
 
 const currencyCardDefaults = defaultProps({
 	onChangeCurrency: T,
@@ -51,7 +69,7 @@ const currencyCardDefaults = defaultProps({
 	rate: 1,
 	isBaseCard: false,
 	expanded: false,
-	availableCurrencies: []
+	availableCurrencies: [],
 })
 
 const currencyCardStateHandlers = withStateHandlers(
@@ -59,8 +77,8 @@ const currencyCardStateHandlers = withStateHandlers(
 		expanded: props.expanded || false,
 	}),
 	{
-		toggleCard: ({expanded}) => () => ({expanded: !expanded}),
-	}
+		toggleCard: ({ expanded }) => () => ({ expanded: !expanded }),
+	},
 )
 
 const currencyCardStyle = theme => ({
@@ -76,57 +94,63 @@ const currencyCardStyle = theme => ({
 	currencyCardBase: {
 		position: 'relative',
 		marginBottom: '1rem',
-	}
+	},
 })
 
-const BaseCard = props => <Card
-	className={props.classes.currencyCardBase}
-	square={props.square}
-	elevation={2}
-	>
-	<CardContent>
-		<LargeInput
-			value={props.amount.toString()}
-			placeholder="0.00"
-			label={props.currency}
-			onChange={evt => {
-				props.onChangeAmount(new Number(evt.target.value) || 0)
-			}}
-			type="number"
-			fullWidth />
-		<Collapse in={props.expanded}>
-			<TextField
-				label="Currency"
-				value={props.currency}
-				margin="normal"
-				onChange={e => props.onChangeCurrency(props.key, e.target.value)}
-				select
+const BaseCard = props => (
+	<Card
+		className={props.classes.currencyCardBase}
+		square={props.square}
+		elevation={2}>
+		<CardContent>
+			<LargeInput
+				value={props.amount.toString()}
+				placeholder="0.00"
+				label={props.currency}
+				onChange={evt => {
+					props.onChangeAmount(new Number(evt.target.value) || 0)
+				}}
+				type="number"
 				fullWidth
-			>
-				{map(option => (
-					<MenuItem key={option} value={option}>
-						{option}
-					</MenuItem>
-				), props.availableCurrencies)}
-			</TextField>
-		</Collapse>
-	</CardContent>
-</Card>
-
-const handleBaseCard = branch( prop('isBaseCard'), renderComponent(BaseCard) )
-
-const LoadingCard = props => (
-<Card
-	className={props.classes.currencyCardBase}
-	square={props.square}
-	>
-	<CardContent>
-		<LinearProgress />
-	</CardContent>
-</Card>
+			/>
+			<Collapse in={props.expanded}>
+				<TextField
+					label="Currency"
+					value={props.currency}
+					margin="normal"
+					onChange={e =>
+						props.onChangeCurrency(props.key, e.target.value)
+					}
+					select
+					fullWidth>
+					{map(
+						option => (
+							<MenuItem key={option} value={option}>
+								{option}
+							</MenuItem>
+						),
+						props.availableCurrencies,
+					)}
+				</TextField>
+			</Collapse>
+		</CardContent>
+	</Card>
 )
 
-const handleLoading = branch(pathOr(false, ['data', 'loading']), renderComponent(LoadingCard))
+const handleBaseCard = branch(prop('isBaseCard'), renderComponent(BaseCard))
+
+const LoadingCard = props => (
+	<Card className={props.classes.currencyCardBase} square={props.square}>
+		<CardContent>
+			<LinearProgress />
+		</CardContent>
+	</Card>
+)
+
+const handleLoading = branch(
+	pathOr(false, ['data', 'loading']),
+	renderComponent(LoadingCard),
+)
 
 export const CurrencyCard = compose(
 	currencyCardDefaults,
@@ -138,8 +162,8 @@ export const CurrencyCard = compose(
 			variables: {
 				base: props.base,
 				currencies: [props.currency],
-			}
-		})
+			},
+		}),
 	}),
 	handleLoading,
 	withProps(props => ({
@@ -147,65 +171,64 @@ export const CurrencyCard = compose(
 		onDelete: () => {
 			props.toggleCard()
 			props.onDelete()
-		}
-	}))
+		},
+	})),
 	//handle loading
-)(props => <Card
-	className={props.classes.currencyCard}
-	square={props.square}
-	elevation={props.elevation}
-	margin="normal"
-	>
-	<IconButton
-		className={props.classes.expandButton}
-		onClick={props.toggleCard}
-	>
-		{props.expanded ? (<ExpandLess />) : (<ExpandMore />)}
-	</IconButton>
+)(props => (
+	<Card
+		className={props.classes.currencyCard}
+		square={props.square}
+		elevation={props.elevation}
+		margin="normal">
+		<IconButton
+			className={props.classes.expandButton}
+			onClick={props.toggleCard}>
+			{props.expanded ? <ExpandLess /> : <ExpandMore />}
+		</IconButton>
 
-	<CardContent>
-		<LargeInput
-			value={(props.amount * props.rate).toFixed(2)}
-			label={`${props.amount} ${props.base} > ${props.currency}`}
-			disableUnderline
-			fullWidth />
-		<Collapse in={props.expanded}>
-			<TextField
-				label="Currency"
-				value={props.currency}
-				margin="normal"
-				onChange={evt => props.onChangeCurrency(props.pos, evt.target.value)}
-				select
-				fullWidth
-			>
-				{map(option => (
-					<MenuItem key={option} value={option}>
-						{option}
-					</MenuItem>
-				), props.availableCurrencies)}
-			</TextField>
-			<TextField
-				disabled
-				label="Rate"
-				value={props.rate.toFixed(4)}
-				margin="normal"
+		<CardContent>
+			<LargeInput
+				value={(props.amount * props.rate).toFixed(2)}
+				label={`${props.amount} ${props.base} > ${props.currency}`}
+				disableUnderline
 				fullWidth
 			/>
-		</Collapse>
-	</CardContent>
+			<Collapse in={props.expanded}>
+				<TextField
+					label="Currency"
+					value={props.currency}
+					margin="normal"
+					onChange={evt =>
+						props.onChangeCurrency(props.pos, evt.target.value)
+					}
+					select
+					fullWidth>
+					{map(
+						option => (
+							<MenuItem key={option} value={option}>
+								{option}
+							</MenuItem>
+						),
+						props.availableCurrencies,
+					)}
+				</TextField>
+				<TextField
+					disabled
+					label="Rate"
+					value={props.rate.toFixed(4)}
+					margin="normal"
+					fullWidth
+				/>
+			</Collapse>
+		</CardContent>
 
-	<CardActions>
-		<Collapse in={props.expanded}>
-		<Button
-			onClick={props.onPin}>
-			Pin to top
-		</Button>
-		<Button
-			onClick={props.onDelete}
-			color="secondary">
-			Delete
-		</Button>
-		</Collapse>
-	</CardActions>
-</Card>
-)
+		<CardActions>
+			<Collapse in={props.expanded}>
+				<Button onClick={props.onPin}>Pin to top</Button>
+				<Button onClick={props.onDelete} color="secondary">
+					Delete
+				</Button>
+			</Collapse>
+		</CardActions>
+	</Card>
+))
