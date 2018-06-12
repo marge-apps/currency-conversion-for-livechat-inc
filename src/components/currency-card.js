@@ -32,7 +32,7 @@ const largeInputStyles = theme => ({
 
 export const LargeInput = withStyles(largeInputStyles)(
 	props => <TextField
-		InputProps={{ classes: props.classes}}
+		InputProps={{ classes: props.classes, disableUnderline: props.disableUnderline}}
 		InputLabelProps={{
 			shrink: true
 		}}
@@ -162,12 +162,8 @@ export const CurrencyCard = compose(
 	<CardContent>
 		<LargeInput
 			value={(props.amount * props.rate).toFixed(2)}
-			placeholder="0.00"
 			label={`${props.amount} ${props.base} > ${props.currency}`}
-			// onChange={evt => {
-			// 	props.onChangeAmount((new Number(evt.target.value) || 0) / props.rate)
-			// 	console.log(props.onChangeAmount)
-			// }}
+			disableUnderline
 			fullWidth />
 		<Collapse in={props.expanded}>
 			<TextField
