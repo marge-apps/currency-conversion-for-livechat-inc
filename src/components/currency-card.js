@@ -36,7 +36,7 @@ export const LargeInput = withStyles(largeInputStyles)(
 		InputLabelProps={{
 			shrink: true
 		}}
-		{...omit(['classes'], props)}
+		{...omit(['classes', 'disableUnderline'], props)}
 		/>
 	)
 
@@ -143,7 +143,11 @@ export const CurrencyCard = compose(
 	}),
 	handleLoading,
 	withProps(props => ({
-		rate: props.data.conversionRate[0].rate || 0
+		rate: props.data.conversionRate[0].rate || 0,
+		onDelete: () => {
+			props.toggleCard()
+			props.onDelete()
+		}
 	}))
 	//handle loading
 )(props => <Card
