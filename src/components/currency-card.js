@@ -1,20 +1,20 @@
 import React from 'react'
-import debounce from 'debounce';
 import {graphql} from 'react-apollo';
 
-import {is, ifElse, pipe, map, omit, find, pathOr, pick, propEq, prop, T} from 'ramda';
+import {map, omit, pathOr, prop, T} from 'ramda';
 import {branch, renderComponent, compose, withState, withStateHandlers, withProps, defaultProps, setPropTypes} from 'recompose';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
-import Collapse from '@material-ui/core/Collapse';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import {
+	Card,
+	CardContent,
+	CardActions,
+	Collapse,
+	TextField,
+	MenuItem,
+	Button,
+	IconButton,
+	LinearProgress,
+} from '@material-ui/core';
 
 import {Delete, KeyboardArrowDown, ExpandLess, ExpandMore, Done} from '@material-ui/icons';
 import currenciesQuery from '../queries/currency'
@@ -115,12 +115,15 @@ const BaseCard = props => <Card
 
 const handleBaseCard = branch( prop('isBaseCard'), renderComponent(BaseCard) )
 
-const LoadingCard = props => ( <Card
+const LoadingCard = props => (
+<Card
 	className={props.classes.currencyCardBase}
 	square={props.square}
 	>
-		Loading...
-	</Card>
+	<CardContent>
+		<LinearProgress />
+	</CardContent>
+</Card>
 )
 
 const handleLoading = branch(pathOr(false, ['data', 'loading']), renderComponent(LoadingCard))
