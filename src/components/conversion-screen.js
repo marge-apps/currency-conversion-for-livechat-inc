@@ -1,15 +1,14 @@
 import React from 'react'
-import { map, equals, addIndex } from 'ramda'
-import { branch, renderComponent, withProps, compose } from 'recompose'
+import { map, addIndex } from 'ramda'
+import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import AddIcon from '@material-ui/icons/Add'
 import { CurrencyCard } from './currency-card'
 
-const mapIndexed = addIndex(map)
+import availableCurrencies from '../lib/availableCurrencies'
 
-const availableCurrencies = ['USD', 'GBP', 'EUR', 'ALL']
+const mapIndexed = addIndex(map)
 
 export const CreateButton = props => (
 	<Button {...props} color="primary" classes={props.classes} variant="fab">
@@ -41,6 +40,7 @@ export const ConversionScreen = compose(withStyles(conversionScreenStyle))(
 						pos={i}
 						amount={props.amount}
 						onChangeCurrency={props.onChangeCurrency}
+						onChangeBaseCurrency={props.onChangeBaseCurrency}
 						onPin={() => props.onPin(i)}
 						onDelete={() => props.onDelete(i)}
 						onChangeAmount={props.onChangeAmount}

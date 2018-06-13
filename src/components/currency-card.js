@@ -106,33 +106,32 @@ const BaseCard = props => (
 			<LargeInput
 				value={props.amount.toString()}
 				placeholder="0.00"
-				label={props.currency}
+				label={props.base}
 				onChange={evt => {
 					props.onChangeAmount(new Number(evt.target.value) || 0)
 				}}
 				type="number"
 				fullWidth
 			/>
-			<Collapse in={props.expanded}>
-				<TextField
-					label="Currency"
-					value={props.currency}
-					margin="normal"
-					onChange={e =>
-						props.onChangeCurrency(props.key, e.target.value)
-					}
-					select
-					fullWidth>
-					{map(
-						option => (
-							<MenuItem key={option} value={option}>
-								{option}
-							</MenuItem>
-						),
-						props.availableCurrencies,
-					)}
-				</TextField>
-			</Collapse>
+			<TextField
+				label="Currency"
+				value={props.base}
+				margin="normal"
+				onChange={e => {
+					props.onChangeCurrency(props.key, e.target.value)
+					props.onChangeBaseCurrency(e.target.value)
+				}}
+				select
+				fullWidth>
+				{map(
+					option => (
+						<MenuItem key={option} value={option}>
+							{option}
+						</MenuItem>
+					),
+					props.availableCurrencies,
+				)}
+			</TextField>
 		</CardContent>
 	</Card>
 )

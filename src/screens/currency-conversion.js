@@ -33,6 +33,7 @@ const state = withStateHandlers(
 		changeCurrency: ({ converters }) => (i, currency) => ({
 			converters: update(i, { currency }, converters),
 		}),
+		changeBaseCurrency: () => base => ({ base }),
 		setAmount: () => amount => ({ amount }),
 	},
 )
@@ -53,6 +54,7 @@ export default compose(
 			onChangeCurrency={props.changeCurrency}
 			onPin={props.pin}
 			onChangeAmount={props.setAmount}
+			onChangeBaseCurrency={props.changeBaseCurrency}
 		/>
 	</div>
 ))

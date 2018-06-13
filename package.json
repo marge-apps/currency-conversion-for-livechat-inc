@@ -10,6 +10,11 @@
     "debounce": "^1.1.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
+    "graphql-yoga": "^1.14.6",
+    "if-env": "^1.0.4",
+    "isomorphic-fetch": "^2.2.1",
+    "monk": "^6.0.6",
+    "node-fetch": "^2.1.2",
     "ramda": "^0.25.0",
     "react": "^16.4.0",
     "react-apollo": "^2.1.4",
@@ -18,10 +23,11 @@
     "recompose": "^0.27.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node ./server/index",
     "build": "react-scripts build",
+    "dev": "concurrently 'react-scripts start' 'nodemon ./server/index'",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "postinstall": "if-env NODE_ENV=production npm run build || echo Skipping build...",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -32,8 +38,11 @@
     "@storybook/react": "^3.4.5",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "concurrently": "^3.5.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "nodemon": "^1.17.5",
     "react-test-renderer": "^16.4.0"
-  }
+  },
+  "proxy": "http://localhost:4000/"
 }

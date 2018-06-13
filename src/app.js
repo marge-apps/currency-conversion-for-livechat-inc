@@ -16,4 +16,7 @@ const App = props => (
 	</div>
 )
 
-export default compose(livechat, graphqlProvider)(App)
+export default compose(
+	livechat,
+	graphqlProvider,
+)(App)
