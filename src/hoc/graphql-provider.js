@@ -4,7 +4,7 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
 const client = new ApolloClient({
-	uri: 'https://mock-currencies-graphql.now.sh',
+	uri: 'https://graphql-currencies.now.sh/',
 })
 
 const Apollo = ({ children }) => (

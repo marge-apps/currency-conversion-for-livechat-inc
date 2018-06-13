@@ -6,6 +6,7 @@ import { map, addIndex, update, remove } from 'ramda'
 import { withStyles } from '@material-ui/core/styles'
 import { ConversionScreen } from '../components/conversion-screen'
 import { retrieveFromState, storeToState } from '../hoc/persisted-state'
+
 const styles = theme => ({
 	container: {
 		padding: '1rem',
@@ -40,7 +41,6 @@ export default compose(
 	retrieveFromState,
 	state,
 	storeToState,
-	withProps(props => console.log(props.converters)),
 	withStyles(styles),
 )(props => (
 	<div className={props.classes.container}>

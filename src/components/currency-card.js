@@ -166,8 +166,9 @@ export const CurrencyCard = compose(
 		}),
 	}),
 	handleLoading,
+	withProps(props => console.log(props.data)),
 	withProps(props => ({
-		rate: props.data.conversionRate[0].rate || 0,
+		rate: props.data.conversionRate.rates[0].rate || 0,
 		onDelete: () => {
 			props.toggleCard()
 			props.onDelete()
