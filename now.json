@@ -1,0 +1,10 @@
+{
+	"name": "currency-conversion-for-lc",
+	"alias": "currency-conversion-for-lc",
+	"type": "npm",
+	"public": true,
+	"env": {
+		"API_KEY": "@openxchange-api-key",
+		"NODE_ENV": "production"
+	}
+}
