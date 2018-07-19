@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- node
+cache:
+  directories:
+  - node_modules
+script: npm test
+before_deploy: npm install now --no-save
+deploy:
+- provider: script
+  script: now --team marge-apps --token $NOW_TOKEN && now alias --team marge-apps --token $NOW_TOKEN
+  skip_cleanup: true
+  on:
+    master: true
+env:
+  global:
+    secure: VdW63WmJir8Dl+s9XcHiqMW2puQvLcvKLUtgnb4iibqgYFm941MyRlPBz9qbGY9cQ9EHoXwzaBrZBbNBw66h2DPXl1JFu/v21Xeb1odM4UmdJyQKkpET7WOUL9eJZ9xY1yNgtc4oddPpCuhu1aHLRLqLd0yVCARAYwQGkqNoPBqb6J9XlCAxFO3GDTtBShK/rxCN5qE3wpB/jBl1GbgK0UZZZ0e260A0jsSBfP+pUQNKWyll/x7OYntLTF1+YHRaxvOg7TpXEDKxjT3T4KnVEiDpt5iWS0k9/VMdAC6ZxcwBi5abLJJxUVCVjph2t33LoAds+xwddWDm2icIcz9X9ZepDC6+RqXFcUBvZ4RKwirrJ8HVJ6gVGco1NoCkAg0y/nNO9GNhClTyYOK+u7vDj6f3bgxBRNglJKLaf/BF99z4vOuMN19GFtYONhNOkxqm/HIwBxS1l+C+QJGVjld7AhCgAzNB1mqPhD/IaH+DNHJoe5FkezSmu3FJBad/fMz+BPqBWqoFw4VuV3ofpEwd9NeO5LKWiuC6c0lcBta7qclThgIjuw4WwE9A7mTkVd6vGNYJZZXnuZRVgXIDqf2I3qqT9P0kprokpiIi6j1lcFCNPYRbbzxOFPel8cdHA1pa+WU0VebtpW7f1q627KYvGHno9/RCsvyJKWHD3z2uD1k=
