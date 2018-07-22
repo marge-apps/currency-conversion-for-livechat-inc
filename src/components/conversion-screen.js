@@ -60,7 +60,7 @@ export const ConversionScreen = compose(withStyles(conversionScreenStyle))(
 					color="textSecondary"
 					>
 					<p>
-						Developed by <img src={margeLogo} height="16px" align="center"/> Marge Apps with <br/>
+						Developed by <img src={margeLogo} height="16px" align="center"/> Marge Apps with ❤️<br/>
 						Got questions or feedback? <a href="https://spectrum.chat/marge-apps" target="_blank">Contact us</a>
 					</p>
 				</Typography>
