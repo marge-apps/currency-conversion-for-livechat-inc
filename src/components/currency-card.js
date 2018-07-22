@@ -1,16 +1,15 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
+import { format } from 'date-fns';
 
 import { map, omit, pathOr, prop, T } from 'ramda'
 import {
 	branch,
 	renderComponent,
 	compose,
-	withState,
 	withStateHandlers,
 	withProps,
 	defaultProps,
-	setPropTypes,
 } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
 import {
@@ -26,11 +25,8 @@ import {
 } from '@material-ui/core'
 
 import {
-	Delete,
-	KeyboardArrowDown,
 	ExpandLess,
 	ExpandMore,
-	Done,
 } from '@material-ui/icons'
 import currenciesQuery from '../queries/currency'
 
@@ -95,6 +91,9 @@ const currencyCardStyle = theme => ({
 		position: 'relative',
 		marginBottom: '1rem',
 	},
+	validAt: {
+
+	}
 })
 
 const BaseCard = props => (
@@ -180,6 +179,7 @@ export const CurrencyCard = compose(
 		square={props.square}
 		elevation={props.elevation}
 		margin="normal">
+
 		<IconButton
 			className={props.classes.expandButton}
 			onClick={props.toggleCard}>
@@ -215,7 +215,7 @@ export const CurrencyCard = compose(
 				<TextField
 					disabled
 					label="Rate"
-					value={props.rate.toFixed(4)}
+					value={`${props.rate.toFixed(4)} - Open-Xchange - ${format(new Date(props.data.conversionRate.timestamp), 'MMM DD HH:MM YYYY')}`}
 					margin="normal"
 					fullWidth
 				/>

@@ -23,7 +23,7 @@ const conversionScreenStyle = theme => ({
 	fab: {
 		position: 'fixed',
 		bottom: '1rem',
-		left: '50%',
+		left: 'calc(50% - 28px)',
 		right: '50%',
 		zIndex: 9,
 	},
