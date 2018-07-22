@@ -91,9 +91,6 @@ const currencyCardStyle = theme => ({
 		position: 'relative',
 		marginBottom: '1rem',
 	},
-	validAt: {
-
-	}
 })
 
 const BaseCard = props => (

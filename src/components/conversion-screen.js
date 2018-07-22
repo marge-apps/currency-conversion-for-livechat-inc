@@ -2,8 +2,9 @@ import React from 'react'
 import { map, addIndex } from 'ramda'
 import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import {Button, IconButton, Typography} from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import margeLogo from './marge-logo.png'
 import { CurrencyCard } from './currency-card'
 
 import availableCurrencies from '../lib/availableCurrencies'
@@ -53,6 +54,17 @@ export const ConversionScreen = compose(withStyles(conversionScreenStyle))(
 				props.converters,
 			)}
 
+			<div>
+				<Typography
+					align="center"
+					color="textSecondary"
+					>
+					<p>
+						Developed by <img src={margeLogo} height="16px" align="center"/> Marge Apps with <br/>
+						Got questions or feedback? <a href="https://spectrum.chat/marge-apps" target="_blank">Contact us</a>
+					</p>
+				</Typography>
+			</div>
 			<div className={props.classes.fab}>
 				<CreateButton onClick={props.onCreate} />
 			</div>
