@@ -18,7 +18,7 @@ const calculateRates = async (props) => {
 	const baseRate = rates.rates[base]  // Refactor this
 	const calculate = map(currency => ({
 		abbreviation: currency,
-		rate: baseRate / rates.rates[currency]
+		rate: rates.rates[currency] / baseRate
 	}))
 
 	return {r, a, ctx: {...ctx, rates: calculate(currencies)}, i}
