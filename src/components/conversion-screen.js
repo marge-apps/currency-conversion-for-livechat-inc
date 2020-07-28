@@ -2,7 +2,7 @@ import React from 'react'
 import { map, addIndex } from 'ramda'
 import { compose } from 'recompose'
 import { withStyles } from '@material-ui/core/styles'
-import {Button, IconButton, Typography} from '@material-ui/core'
+import { Card, CardContent, Button, IconButton, Typography } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import margeLogo from './marge-logo.png'
 import { CurrencyCard } from './currency-card'
@@ -33,6 +33,18 @@ const conversionScreenStyle = theme => ({
 export const ConversionScreen = compose(withStyles(conversionScreenStyle))(
 	props => (
 		<div className={props.classes.conversionScreen}>
+			<Card title="Update" style={{marginBottom: '0.6rem'}}>
+				<CardContent>
+					<Typography>
+						<strong>Update 👋</strong>
+					</Typography>
+					<Typography>
+						<p>This application will be sunsetting on 8th of August, 2020.</p>
+						Thank you for using it! 🥰
+					</Typography>
+				</CardContent>
+			</Card>
+
 			{mapIndexed(
 				(c, i) => (
 					<CurrencyCard
