@@ -27,7 +27,7 @@ const start = async () => {
 
 	const server = new GraphQLServer({typeDefs, resolvers, context})
 
-	server.express.use(express.static(path.join(__dirname, '../build')))
+	server.express.use(express.static(path.join(__dirname, './build')))
 
 	server.start(
 		{
